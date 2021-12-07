@@ -1,6 +1,6 @@
 package com.confession.app.model
 
-enum class Mood(quadrant: MoodQuadrant) {
+enum class Mood(val quadrant: MoodQuadrant) {
     ENRAGED(quadrant = MoodQuadrant.RED),
     PANICKED(quadrant = MoodQuadrant.RED),
     STRESSED(quadrant = MoodQuadrant.RED),
@@ -120,5 +120,4 @@ enum class Mood(quadrant: MoodQuadrant) {
     TRANQUIL(quadrant = MoodQuadrant.GREEN),
     COZY(quadrant = MoodQuadrant.GREEN),
     SERENE(quadrant = MoodQuadrant.GREEN),
-
 }
