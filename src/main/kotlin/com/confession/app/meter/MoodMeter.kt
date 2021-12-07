@@ -42,8 +42,6 @@ private fun createQuadrant(
         if(index % (sublistSize) == 0 && index != 0) {
             pleasantnessCount = initialPleasantnessCount
             energyCount -= 1
-        } else {
-            pleasantnessCount += 1
         }
 
         val element = MoodMeterElement(
@@ -52,13 +50,15 @@ private fun createQuadrant(
             pleasantness = pleasantnessCount
         )
 
+        pleasantnessCount += 1
+
         element
     }
 }
 
-private fun createMeter(): List<MoodMeterElement> {
+private fun createMeter(): ArrayList<MoodMeterElement> {
     val moods = Mood.values()
-    val moodMeterElements: MutableList<MoodMeterElement> = mutableListOf()
+    val moodMeterElements: ArrayList<MoodMeterElement> = arrayListOf()
 
     //positive energy, negative pleasantness
     val redQuadrant = createQuadrant(
@@ -90,27 +90,48 @@ private fun createMeter(): List<MoodMeterElement> {
     //negative energy, positive pleasantness
     val greenQuadrant = createQuadrant(
         moods = moods,
-        quadrant = MoodQuadrant.BLUE,
+        quadrant = MoodQuadrant.GREEN,
         energy = -1,
         pleasantness = 1,
     )
     moodMeterElements.addAll(greenQuadrant)
 
-    return moodMeterElements.toList()
+    return moodMeterElements as ArrayList<MoodMeterElement>
 }
 
 class MoodMeter {
-    val meter: List<MoodMeterElement> = createMeter()
+    val meter: ArrayList<MoodMeterElement> = createMeter()
 
     private fun findItem(x: Int, y: Int): MoodMeterElement? {
-        val filtered = meter.filter {
+        return meter.find {
             (x == it.pleasantness && y == it.energy)
         }
+    }
 
-        return if(filtered.size == 1) {
-            filtered.first()
-        } else {
-            return null
+    /*
+    *
+    *  To deal with the fact that zero doesn't exist
+    *
+    * */
+    enum class ChasmOp {
+        ADD,
+        SUBTRACT
+    }
+
+    private fun jumpTheChasm(a: Int, b: Int, operation: ChasmOp): Int {
+        return when(operation) {
+            ChasmOp.ADD -> {
+                val result = a + b
+
+                val final = if(result == 0) result + 1 else result
+                final
+            }
+            ChasmOp.SUBTRACT -> {
+                val result = a - b
+
+                val final = if(result == 0) result - 1 else result
+                final
+            }
         }
     }
 
@@ -122,18 +143,18 @@ class MoodMeter {
     *
     * */
     fun getMoodsNearest(element: MoodMeterElement): List<MoodMeterElement?> {
-        val nearest = mutableListOf<MoodMeterElement?>()
+        val nearest = arrayListOf<MoodMeterElement?>()
 
         //nearest elements by 1
 
         val currentX = element.pleasantness
         val currentY = element.energy
 
-        val rightIdx = currentX + 1
-        val leftIdx = currentX - 1
+        val rightIdx = jumpTheChasm(currentX, 1, ChasmOp.ADD)
+        val leftIdx = jumpTheChasm(currentX, 1, ChasmOp.SUBTRACT)
 
-        val aboveIdx = currentY + 1
-        val belowIdx = currentY - 1
+        val aboveIdx = jumpTheChasm(currentY, 1, ChasmOp.ADD)
+        val belowIdx = jumpTheChasm(currentY, 1, ChasmOp.SUBTRACT)
 
         //top left
         nearest.add(findItem(leftIdx, aboveIdx))
