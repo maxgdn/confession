@@ -1,0 +1,15 @@
+CREATE TABLE remark (
+    id TEXT NOT NULL,
+    question TEXT NOT NULL,
+    answer TEXT NOT NULL
+);
+
+CREATE INDEX remark_id ON confession(id);
+
+selectAll:
+    SELECT *
+    FROM remark;
+
+createOne:
+    INSERT INTO remark (id, question, answer)
+        VALUES (?, ?, ?);

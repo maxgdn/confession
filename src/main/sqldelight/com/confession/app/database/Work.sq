@@ -1,0 +1,4 @@
+CREATE TABLE Work (
+    job INTEGER NOT NULL,
+    location TEXT NOT NULL
+);

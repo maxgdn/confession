@@ -1,0 +1,16 @@
+CREATE TABLE confession (
+  id TEXT NOT NULL,
+  mood TEXT NOT NULL,
+  remark_id TEXT NOT NULL,
+  created_at TEXT NOT NULL
+);
+
+CREATE INDEX confession_id ON confession(id);
+
+selectAll:
+    SELECT *
+    FROM confession;
+
+createOne:
+    INSERT INTO confession (id, mood, remark_id, created_at)
+    VALUES (?, ?, ?, ?);
