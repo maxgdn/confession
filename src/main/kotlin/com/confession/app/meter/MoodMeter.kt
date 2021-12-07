@@ -37,18 +37,15 @@ private fun createQuadrant(
     var pleasantnessCount = initialPleasantnessCount
     var energyCount = initialEnergyCount
 
+    //snake our way down the quadrant while incrementing the correct values
     return items.mapIndexed { index, mood ->
         if(index % (sublistSize) == 0 && index != 0) {
-            println("CHECK ${index} ${sublistSize}")
             pleasantnessCount = initialPleasantnessCount
-            //may vary
             energyCount -= 1
-
         } else {
             pleasantnessCount += 1
         }
 
-        println("COUNT ${pleasantnessCount} ${energyCount}")
         val element = MoodMeterElement(
             mood = mood,
             energy = energyCount,
@@ -59,7 +56,7 @@ private fun createQuadrant(
     }
 }
 
-private fun createMeter(): MutableList<MoodMeterElement> {
+private fun createMeter(): List<MoodMeterElement> {
     val moods = Mood.values()
     val moodMeterElements: MutableList<MoodMeterElement> = mutableListOf()
 
@@ -99,12 +96,66 @@ private fun createMeter(): MutableList<MoodMeterElement> {
     )
     moodMeterElements.addAll(greenQuadrant)
 
-    return moodMeterElements
-}
-
-fun main() {
-    createMeter()
+    return moodMeterElements.toList()
 }
 
 class MoodMeter {
+    val meter: List<MoodMeterElement> = createMeter()
+
+    private fun findItem(x: Int, y: Int): MoodMeterElement? {
+        val filtered = meter.filter {
+            (x == it.pleasantness && y == it.energy)
+        }
+
+        return if(filtered.size == 1) {
+            filtered.first()
+        } else {
+            return null
+        }
+    }
+
+    /*
+    *
+    * Containing structure is poor for this operation.
+    * However it works ¯\_(ツ)_/¯ and the size is small.
+    * Consider, hashmap, or indexed 2D array to replace
+    *
+    * */
+    fun getMoodsNearest(element: MoodMeterElement): List<MoodMeterElement?> {
+        val nearest = mutableListOf<MoodMeterElement?>()
+
+        //nearest elements by 1
+
+        val currentX = element.pleasantness
+        val currentY = element.energy
+
+        val rightIdx = currentX + 1
+        val leftIdx = currentX - 1
+
+        val aboveIdx = currentY + 1
+        val belowIdx = currentY - 1
+
+        //top left
+        nearest.add(findItem(leftIdx, aboveIdx))
+        //top
+        nearest.add(findItem(currentX, aboveIdx))
+        //top right
+        nearest.add(findItem(rightIdx, aboveIdx))
+
+        //left
+        nearest.add(findItem(leftIdx, currentY))
+        //current
+        nearest.add(findItem(currentX, currentY))
+        //right
+        nearest.add(findItem(rightIdx, currentY))
+
+        //bottom left
+        nearest.add(findItem(leftIdx, belowIdx))
+        //bottom
+        nearest.add(findItem(currentX, belowIdx))
+        //bottom right
+        nearest.add(findItem(rightIdx, belowIdx))
+
+        return nearest
+    }
 }
