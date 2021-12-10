@@ -43,32 +43,35 @@ fun MoodMeterQuadrantElement(
 
     Column(
         modifier = Modifier
+
+            .pointerMoveFilter(
+                onEnter = {
+                    hovered.value = moodMeterElement
+                    false
+                },
+                onExit = {
+                    hovered.value = null
+                    false
+                }
+            )
+            .pointerInput(Unit) {
+                detectTapGestures(
+                    onPress = { selectMood()  },
+                    onDoubleTap = { selectMood() },
+                    onLongPress = { selectMood() },
+                    onTap = { selectMood() }
+                )
+            }
             .border(5.dp, Color.White)
-            .padding(20.dp),
+            .padding(20.dp)
+
+        ,
     ) {
         Box(
             modifier = Modifier
                 .size(20.dp)
                 .clip(RectangleShape)
                 .background(Color.Transparent)
-                .pointerMoveFilter(
-                    onEnter = {
-                        hovered.value = moodMeterElement
-                        false
-                    },
-                    onExit = {
-                        hovered.value = null
-                        false
-                    }
-                )
-                .pointerInput(Unit) {
-                    detectTapGestures(
-                        onPress = { selectMood()  },
-                        onDoubleTap = { selectMood() },
-                        onLongPress = { selectMood() },
-                        onTap = { selectMood() }
-                    )
-                }
         )
     }
 
