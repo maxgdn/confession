@@ -1,4 +1,3 @@
-import androidx.compose.desktop.Window
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -11,15 +10,27 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Window
+import androidx.compose.ui.window.application
+import androidx.compose.ui.window.rememberWindowState
 import com.confession.app.di.initKoin
+import com.confession.app.meter.MoodMeter
 import com.confession.app.repository.RemarkRepository
 import com.confession.app.service.RemarkViewModel
+import com.confession.app.ui.mood.MoodMeterGraph
 import kotlinx.coroutines.launch
 
-fun main() {
+
+
+fun main() = application {
     var app = initKoin()
 
-    Window {
+
+    Window(
+        onCloseRequest = { exitApplication() },
+        title = "Compose for Desktop",
+        state = rememberWindowState(width = 300.dp, height = 300.dp)
+    ) {
         val remarkViewModel = app.koin.get<RemarkViewModel>()
 
         MaterialTheme {
@@ -82,6 +93,8 @@ fun main() {
                         Text(it.answer)
                     }
                 }
+
+                MoodMeterGraph(moodMeter = MoodMeter())
             }
         }
     }

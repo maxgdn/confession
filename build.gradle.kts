@@ -3,8 +3,8 @@ import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "1.5.10"
-    id("org.jetbrains.compose") version "0.4.0"
+    kotlin("jvm") version "1.5.31"
+    id("org.jetbrains.compose") version "1.0.0"
     id("com.squareup.sqldelight") version "1.5.0"
 }
 
