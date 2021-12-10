@@ -4,9 +4,10 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import com.confession.app.service.AccomplishViewModel
 import com.confession.app.service.RemarkViewModel
 import com.confession.app.ui.main.*
-import com.confession.app.ui.main.zones.RemarkZone
+import com.confession.app.ui.main.zones.*
 import com.confession.app.ui.zones.Zone.*
 import org.koin.core.KoinApplication
 import java.lang.Integer.max
@@ -72,7 +73,8 @@ fun Zones(
                 RemarkZone(remarkViewModel)
             }
             Accomplish -> {
-                AccomplishZone()
+                val accomplishViewModel = koinApplication.koin.get<AccomplishViewModel>()
+                AccomplishZone(accomplishViewModel)
             }
             Preview -> {
                 PreviewZone()
