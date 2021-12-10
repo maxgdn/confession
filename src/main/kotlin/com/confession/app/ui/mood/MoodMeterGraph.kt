@@ -17,8 +17,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.input.pointer.pointerMoveFilter
+import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.toSize
 import com.confession.app.meter.MoodMeter
 import com.confession.app.meter.MoodMeterElement
 import com.confession.app.model.MoodQuadrant
@@ -197,70 +200,92 @@ fun MoodMeterGraph(moodMeter: MoodMeter) {
     val blue = filterByQuadrant(MoodQuadrant.BLUE)
     val green = filterByQuadrant(MoodQuadrant.GREEN)
 
+    val graphWidth = remember { mutableStateOf(0.dp) }
+
     Column(
         modifier = Modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.SpaceAround,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Column {
-            Row {
-                MoodMeterQuadrant(
-                    moods = red,
-                    selected = selectedMoodMeterElement,
-                    hovered = hoveredMoodMeterElement,
-                    quadrant = MoodQuadrant.RED
-                )
-                MoodMeterQuadrant(
-                    moods = yellow,
-                    selected = selectedMoodMeterElement,
-                    hovered = hoveredMoodMeterElement,
-                    quadrant = MoodQuadrant.YELLOW
-                )
+        BoxWithConstraints(
+            modifier = Modifier.border(1.dp, Color.Blue).onGloballyPositioned { coordinates ->
+                graphWidth.value = coordinates.size.toSize().width.dp
             }
-            Row {
-                MoodMeterQuadrant(
-                    moods = blue,
-                    selected = selectedMoodMeterElement,
-                    hovered = hoveredMoodMeterElement,
-                    quadrant = MoodQuadrant.BLUE
-                )
-                MoodMeterQuadrant(
-                    moods = green,
-                    selected = selectedMoodMeterElement,
-                    hovered = hoveredMoodMeterElement,
-                    quadrant = MoodQuadrant.GREEN
-                )
+        ) {
+
+            Column {
+                Row {
+                    MoodMeterQuadrant(
+                        moods = red,
+                        selected = selectedMoodMeterElement,
+                        hovered = hoveredMoodMeterElement,
+                        quadrant = MoodQuadrant.RED
+                    )
+                    MoodMeterQuadrant(
+                        moods = yellow,
+                        selected = selectedMoodMeterElement,
+                        hovered = hoveredMoodMeterElement,
+                        quadrant = MoodQuadrant.YELLOW
+                    )
+                }
+                Row {
+                    MoodMeterQuadrant(
+                        moods = blue,
+                        selected = selectedMoodMeterElement,
+                        hovered = hoveredMoodMeterElement,
+                        quadrant = MoodQuadrant.BLUE
+                    )
+                    MoodMeterQuadrant(
+                        moods = green,
+                        selected = selectedMoodMeterElement,
+                        hovered = hoveredMoodMeterElement,
+                        quadrant = MoodQuadrant.GREEN
+                    )
+                }
             }
         }
 
         Column {
             val hovered = hoveredMoodMeterElement.value
-            hovered?.let {
-                Row {
+            Row(
+                modifier = Modifier.requiredHeight(25.dp)
+            ) {
+                hovered?.let {
                     Text(
                         text = "Mood: ${it.mood} Pleasantness: ${it.pleasantness} Energy: ${it.energy}",
                     )
                 }
-            } ?: Text("")
+            }
+
         }
 
-        Column {
+        Column(
+            modifier = Modifier.requiredWidth(graphWidth.value),
+        ) {
             val selected = selectedMoodMeterElement.value
             val nearest = nearestMoodElements.value
 
             if(nearest.isNotEmpty()) {
                 LazyVerticalGrid(
-                    cells = GridCells.Fixed(3)
+                    cells = GridCells.Fixed(3),
+                    modifier = Modifier.border(1.dp, Color.Red),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalArrangement = Arrangement.End,
+                    contentPadding = PaddingValues(40.dp)
                 ) {
                     items(nearest.size) { index ->
-                        val moodMeterElement = nearest[index]
+                        Box(
+                            contentAlignment = Alignment.Center
+                        ) {
+                            val moodMeterElement = nearest[index]
 
-                        if(moodMeterElement == null) Text(" ")
-                        else {
-                            Text(
-                                text = moodMeterElement.mood.name,
-                                fontWeight = if(selected == moodMeterElement) FontWeight.Bold else FontWeight.Normal
-                            )
+                            if(moodMeterElement == null) Text(" ")
+                            else {
+                                Text(
+                                    text = moodMeterElement.mood.name,
+                                    fontWeight = if(selected == moodMeterElement) FontWeight.Bold else FontWeight.Normal,
+                                )
+                            }
                         }
                     }
                 }
