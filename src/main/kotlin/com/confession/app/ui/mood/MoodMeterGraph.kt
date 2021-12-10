@@ -83,7 +83,8 @@ fun MoodMeterQuadrant(
     moods: List<MoodMeterElement>,
     selected: MutableState<MoodMeterElement?>,
     hovered: MutableState<MoodMeterElement?>,
-    quadrant: MoodQuadrant) {
+    quadrant: MoodQuadrant
+) {
 
     var colors: List<Color>
     var angle by Delegates.notNull<Float>()
@@ -211,7 +212,7 @@ fun MoodMeterGraph(moodMeter: MoodMeter) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         BoxWithConstraints(
-            modifier = Modifier.border(1.dp, Color.Blue).onGloballyPositioned { coordinates ->
+            modifier = Modifier.border(1.dp, Color.Black).onGloballyPositioned { coordinates ->
                 graphWidth.value = coordinates.size.toSize().width.dp
             }
         ) {
