@@ -21,7 +21,7 @@ import com.confession.app.ui.zones.Zones
 
 
 fun main() = application {
-    var app = initKoin()
+    val app = initKoin()
 
     Window(
         onCloseRequest = { exitApplication() },
