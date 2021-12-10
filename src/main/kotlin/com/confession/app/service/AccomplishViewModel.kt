@@ -3,6 +3,8 @@ package com.confession.app.service
 import com.confession.app.model.Task
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import java.lang.Integer.max
+import java.lang.Integer.min
 
 class AccomplishViewModel() {
 
@@ -27,6 +29,14 @@ class AccomplishViewModel() {
         _tasksState.value = mutableList
     }
 
-    public fun reorder() {}
+    public fun reorder(task: Task, distance: Int) {
+        val mutableList = _tasksState.value.toMutableList()
+        val index = tasksState.value.indexOf(task)
+        val target = max(min(index + distance, mutableList.size - 1), 0)
+        //everything larger than the target needs to be shifted
+        mutableList.remove(task)
+        mutableList.add(target, task)
+        _tasksState.value = mutableList
+    }
 
 }

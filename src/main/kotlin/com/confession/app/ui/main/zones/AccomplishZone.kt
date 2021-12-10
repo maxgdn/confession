@@ -1,22 +1,22 @@
 package com.confession.app.ui.main.zones
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.KeyboardArrowDown
+import androidx.compose.material.icons.filled.KeyboardArrowRight
+import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.TextFieldValue
 import com.confession.app.model.Task
 import com.confession.app.service.AccomplishViewModel
-import com.confession.app.ui.zones.Zone
 import kotlinx.coroutines.launch
-import kotlin.math.round
-import kotlin.math.roundToLong
 import kotlin.time.Duration
 import kotlin.time.DurationUnit
 import kotlin.time.ExperimentalTime
@@ -34,7 +34,10 @@ fun AccomplishZone(accomplishViewModel: AccomplishViewModel) {
     val taskToCreateDuration = remember { mutableStateOf(Duration.minutes(1)) }
 
 
-    Column {
+    Column(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
         //Create
         Row {
             TextField(
@@ -101,20 +104,46 @@ fun AccomplishZone(accomplishViewModel: AccomplishViewModel) {
 
             val timeInHoursFormatted = "%.${4}f".format(timeInHours.toDouble())
 
-            Text("Number of Tasks: ${tasks.size} Time in Hours: $timeInHoursFormatted")
+            Text("Number of Tasks: ${tasks.size} $timeInHoursFormatted hours")
         }
 
         LazyColumn {
             items(tasks.size) { index ->
                 Row {
                     val current = tasks[index]
+                    //Read
                     Text("${current.name} ${current.duration.inWholeMinutes}")
+                    //Update
+
+                    //Modify
+                    Box(
+                        modifier = Modifier.clickable {
+                            accomplishViewModel.reorder(current, -1)
+                        }
+                    ) {
+                        Icon(imageVector = Icons.Default.KeyboardArrowUp, "")
+                    }
+                    Box(
+                        modifier = Modifier.clickable {
+                            accomplishViewModel.reorder(current, 1)
+                        }
+                    ) {
+                        Icon(imageVector = Icons.Default.KeyboardArrowDown, "")
+                    }
+
+                    Box(
+                        modifier = Modifier.clickable {
+                            accomplishViewModel.removeTask(current)
+                        }
+                    ) {
+                        Icon(imageVector = Icons.Default.Delete, "")
+                    }
+
                 }
             }
         }
 
-        //Read
-        //Update
-        //Delete
+
+
     }
 }
