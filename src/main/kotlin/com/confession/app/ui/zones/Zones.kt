@@ -6,6 +6,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import com.confession.app.service.RemarkViewModel
 import com.confession.app.ui.main.*
+import com.confession.app.ui.main.zones.RemarkZone
 import com.confession.app.ui.zones.Zone.*
 import org.koin.core.KoinApplication
 import java.lang.Integer.max

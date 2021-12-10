@@ -1,4 +1,4 @@
-package com.confession.app.ui.main
+package com.confession.app.ui.main.zones
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
