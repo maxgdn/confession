@@ -22,6 +22,11 @@ fun RemarkZone(remarkViewModel: RemarkViewModel) {
     val answerTextValue = remember { mutableStateOf(TextFieldValue()) }
     val remarkState = remarkViewModel.remarkState.collectAsState()
 
+
+    //one thing I am currently doing well
+
+    //one thing to improve on
+
     Column {
         Row {
 

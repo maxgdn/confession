@@ -49,7 +49,8 @@ fun AccomplishZone(accomplishViewModel: AccomplishViewModel) {
                 value = taskToCreateTextValue.value,
                 onValueChange = {
                     taskToCreateTextValue.value = it
-                }
+                },
+                singleLine = true
             )
 
             var expanded = remember { mutableStateOf(false) }
@@ -167,7 +168,6 @@ fun AccomplishZone(accomplishViewModel: AccomplishViewModel) {
                             Icon(imageVector = Icons.Default.Delete, "")
                         }
                     }
-
                 }
             }
         }

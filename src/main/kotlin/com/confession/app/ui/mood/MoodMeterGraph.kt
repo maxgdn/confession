@@ -13,6 +13,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.drawWithContent
+import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.input.pointer.pointerInput
@@ -205,48 +207,74 @@ fun MoodMeterGraph(moodMeter: MoodMeter) {
     val green = filterByQuadrant(MoodQuadrant.GREEN)
 
     val graphWidth = remember { mutableStateOf(0.dp) }
+    val graphHeight = remember { mutableStateOf(0.dp) }
+
+    val textWidth = remember { mutableStateOf(0.dp) }
 
     Column(
         modifier = Modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.SpaceAround,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        BoxWithConstraints(
-            modifier = Modifier.border(1.dp, Color.Black).onGloballyPositioned { coordinates ->
-                graphWidth.value = coordinates.size.toSize().width.dp
-            }
+        Row(
+            modifier = Modifier.padding(end = textWidth.value),
+            horizontalArrangement = Arrangement.Center
         ) {
+            Column(
+                modifier = Modifier.height(graphHeight.value).onGloballyPositioned { coordinates ->
+                    textWidth.value = coordinates.size.toSize().width.dp
+                },
+                verticalArrangement = Arrangement.Center,
+            ) {
+                Text("Energy", Modifier.rotate(270f))
+            }
 
-            Column {
-                Row {
-                    MoodMeterQuadrant(
-                        moods = red,
-                        selected = selectedMoodMeterElement,
-                        hovered = hoveredMoodMeterElement,
-                        quadrant = MoodQuadrant.RED
-                    )
-                    MoodMeterQuadrant(
-                        moods = yellow,
-                        selected = selectedMoodMeterElement,
-                        hovered = hoveredMoodMeterElement,
-                        quadrant = MoodQuadrant.YELLOW
-                    )
+            BoxWithConstraints(
+                modifier = Modifier.border(3.dp, Color.Magenta).onGloballyPositioned { coordinates ->
+                    graphWidth.value = coordinates.size.toSize().width.dp
+                    graphHeight.value = coordinates.size.toSize().height.dp
                 }
-                Row {
-                    MoodMeterQuadrant(
-                        moods = blue,
-                        selected = selectedMoodMeterElement,
-                        hovered = hoveredMoodMeterElement,
-                        quadrant = MoodQuadrant.BLUE
-                    )
-                    MoodMeterQuadrant(
-                        moods = green,
-                        selected = selectedMoodMeterElement,
-                        hovered = hoveredMoodMeterElement,
-                        quadrant = MoodQuadrant.GREEN
-                    )
+            ) {
+                Column(
+                    modifier = Modifier.border(2.dp, Color.Blue),
+                ) {
+                    Row {
+                        MoodMeterQuadrant(
+                            moods = red,
+                            selected = selectedMoodMeterElement,
+                            hovered = hoveredMoodMeterElement,
+                            quadrant = MoodQuadrant.RED
+                        )
+                        MoodMeterQuadrant(
+                            moods = yellow,
+                            selected = selectedMoodMeterElement,
+                            hovered = hoveredMoodMeterElement,
+                            quadrant = MoodQuadrant.YELLOW
+                        )
+                    }
+                    Row {
+                        MoodMeterQuadrant(
+                            moods = blue,
+                            selected = selectedMoodMeterElement,
+                            hovered = hoveredMoodMeterElement,
+                            quadrant = MoodQuadrant.BLUE
+                        )
+                        MoodMeterQuadrant(
+                            moods = green,
+                            selected = selectedMoodMeterElement,
+                            hovered = hoveredMoodMeterElement,
+                            quadrant = MoodQuadrant.GREEN
+                        )
+                    }
                 }
             }
+        }
+
+        Row(
+            modifier = Modifier.width(graphWidth.value),
+            horizontalArrangement = Arrangement.Center
+        ) {
+            Text("Pleasantness")
         }
 
         Column {

@@ -6,7 +6,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import com.confession.app.service.AccomplishViewModel
 import com.confession.app.service.RemarkViewModel
-import com.confession.app.ui.main.*
 import com.confession.app.ui.main.zones.*
 import com.confession.app.ui.zones.Zone.*
 import org.koin.core.KoinApplication
@@ -65,8 +64,11 @@ fun Zones(
         scope.content()
 
         when(zones[index.value]) {
-            Mood -> {
-                MoodZone()
+            Recognize -> {
+                RecognizeZone()
+            }
+            Become -> {
+
             }
             Remark -> {
                 val remarkViewModel = koinApplication.koin.get<RemarkViewModel>()
