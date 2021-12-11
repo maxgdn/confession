@@ -5,7 +5,7 @@ import com.confession.app.meter.MoodMeter
 import com.confession.app.ui.mood.MoodMeterGraph
 
 @Composable
-fun MoodZone() {
+fun RecognizeZone() {
     MoodMeterGraph(
         moodMeter = MoodMeter()
     )
