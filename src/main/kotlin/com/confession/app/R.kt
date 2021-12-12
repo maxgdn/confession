@@ -7,6 +7,8 @@ object ResString {
     val previous: String
     val next: String
     val refresh: String
+    val energy: String
+    val pleasantness: String
 
     init {
         appName = "Confession"
@@ -14,5 +16,7 @@ object ResString {
         previous = "Previous"
         next = "Next"
         refresh = "Refresh"
+        energy = "Energy"
+        pleasantness = "Pleasantness"
     }
 }

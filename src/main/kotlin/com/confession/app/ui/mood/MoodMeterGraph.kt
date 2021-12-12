@@ -7,7 +7,11 @@ import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.GridCells
 import androidx.compose.foundation.lazy.LazyVerticalGrid
+import androidx.compose.material.Icon
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
@@ -20,10 +24,12 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.input.pointer.pointerMoveFilter
 import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.toSize
+import com.confession.app.ResString
 import com.confession.app.meter.MoodMeter
 import com.confession.app.meter.MoodMeterElement
 import com.confession.app.model.MoodQuadrant
@@ -220,23 +226,43 @@ fun MoodMeterGraph(moodMeter: MoodMeter) {
             modifier = Modifier.padding(end = textWidth.value),
             horizontalArrangement = Arrangement.Center
         ) {
+
             Column(
-                modifier = Modifier.height(graphHeight.value).onGloballyPositioned { coordinates ->
-                    textWidth.value = coordinates.size.toSize().width.dp
-                },
+                modifier = Modifier
+                    .height(graphHeight.value)
+                    .onGloballyPositioned { coordinates ->
+                            textWidth.value = coordinates.size.toSize().width.dp
+                    },
                 verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.End
             ) {
-                Text("Energy", Modifier.rotate(270f))
+                Row(
+                    modifier = Modifier
+                        .rotate(270f)
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.ArrowBack,
+                        contentDescription = ""
+                    )
+                    Text(
+                        text = ResString.energy,
+                        fontWeight = FontWeight.ExtraBold
+                    )
+                    Icon(
+                        imageVector = Icons.Default.ArrowForward,
+                        contentDescription = ""
+                    )
+                }
             }
 
             BoxWithConstraints(
-                modifier = Modifier.border(3.dp, Color.Magenta).onGloballyPositioned { coordinates ->
+                modifier = Modifier.border(3.dp, Color.Black).onGloballyPositioned { coordinates ->
                     graphWidth.value = coordinates.size.toSize().width.dp
                     graphHeight.value = coordinates.size.toSize().height.dp
                 }
             ) {
                 Column(
-                    modifier = Modifier.border(2.dp, Color.Blue),
+                    modifier = Modifier
                 ) {
                     Row {
                         MoodMeterQuadrant(
@@ -271,10 +297,21 @@ fun MoodMeterGraph(moodMeter: MoodMeter) {
         }
 
         Row(
-            modifier = Modifier.width(graphWidth.value),
+            modifier = Modifier.width(graphWidth.value).padding(top = 40.dp),
             horizontalArrangement = Arrangement.Center
         ) {
-            Text("Pleasantness")
+            Icon(
+                imageVector = Icons.Default.ArrowBack,
+                contentDescription = ""
+            )
+            Text(
+                text = ResString.pleasantness,
+                fontWeight = FontWeight.ExtraBold
+            )
+            Icon(
+                imageVector = Icons.Default.ArrowForward,
+                contentDescription = ""
+            )
         }
 
         Column {
