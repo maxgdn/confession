@@ -7,6 +7,7 @@ import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.GridCells
 import androidx.compose.foundation.lazy.LazyVerticalGrid
+import androidx.compose.material.Button
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
@@ -28,7 +29,9 @@ import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.compose.ui.unit.toSize
 import com.confession.app.ResString
 import com.confession.app.meter.MoodMeter
@@ -192,14 +195,20 @@ fun MoodMeterQuadrant(
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun MoodMeterGraph(moodMeter: MoodMeter) {
+fun MoodMeterGraph(
+    moodMeter: MoodMeter,
+    moodState: MoodMeterElement?,
+    onMoodChange: (MoodMeterElement?) -> Unit,
+    onMoodReset: () -> Unit
+) {
 
-    val selectedMoodMeterElement: MutableState<MoodMeterElement?> = remember { mutableStateOf(null) }
+    val selectedMoodMeterElement: MutableState<MoodMeterElement?> = remember { mutableStateOf(moodState) }
     val nearestMoodElements: MutableState<List<MoodMeterElement?>> = remember { mutableStateOf(emptyList()) }
     val hoveredMoodMeterElement: MutableState<MoodMeterElement?> = remember { mutableStateOf(null) }
 
     LaunchedEffect(selectedMoodMeterElement.value) {
         val selected = selectedMoodMeterElement.value
+        onMoodChange(selected)
         if(selected != null) nearestMoodElements.value = moodMeter.getMoodsNearest(selected)
         else nearestMoodElements.value = emptyList()
     }
@@ -223,6 +232,24 @@ fun MoodMeterGraph(moodMeter: MoodMeter) {
         verticalArrangement = Arrangement.SpaceAround,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+
+        Column {
+            val hovered = hoveredMoodMeterElement.value
+            Row(
+                modifier = Modifier.requiredHeight(30.dp)
+            ) {
+                val element = hovered ?: selectedMoodMeterElement.value
+                if(element != null) {
+                    Text(
+                        text = "Mood: ${element.mood} Pleasantness: ${element.pleasantness} Energy: ${element.energy}",
+                        fontWeight = FontWeight.ExtraBold,
+                        fontSize = 18.sp
+                    )
+                }
+            }
+
+        }
+
         Row(
             modifier = Modifier.padding(end = textWidth.value),
             horizontalArrangement = Arrangement.Center
@@ -257,7 +284,7 @@ fun MoodMeterGraph(moodMeter: MoodMeter) {
             }
 
             BoxWithConstraints(
-                modifier = Modifier.border(3.dp, Color.Black).onGloballyPositioned { coordinates ->
+                modifier = Modifier.border(2.dp, Color.Black).onGloballyPositioned { coordinates ->
                     graphWidth.value = coordinates.size.toSize().width.dp
                     graphHeight.value = coordinates.size.toSize().height.dp
                 }
@@ -315,19 +342,7 @@ fun MoodMeterGraph(moodMeter: MoodMeter) {
             )
         }
 
-        Column {
-            val hovered = hoveredMoodMeterElement.value
-            Row(
-                modifier = Modifier.requiredHeight(25.dp)
-            ) {
-                hovered?.let {
-                    Text(
-                        text = "Mood: ${it.mood} Pleasantness: ${it.pleasantness} Energy: ${it.energy}",
-                    )
-                }
-            }
-
-        }
+        Spacer(Modifier.size(30.dp))
 
         Column(
             modifier = Modifier.requiredWidth(graphWidth.value),
@@ -390,6 +405,24 @@ fun MoodMeterGraph(moodMeter: MoodMeter) {
                             selected = selected
                         )
                     }
+                }
+            }
+
+            Spacer(Modifier.size(10.dp))
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.Center
+            ) {
+                Button(
+                    onClick = {
+                        selectedMoodMeterElement.value = null
+                        onMoodReset()
+                    }
+                ) {
+                    Text(
+                        text = ResString.reset
+                    )
                 }
             }
         }

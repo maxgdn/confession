@@ -14,7 +14,7 @@ import com.confession.app.ui.mood.MoodMeterGraph
 import com.confession.app.ui.qa.Question
 
 @Composable
-fun RecognizeZone(moodViewModel: MoodViewModel) {
+fun BecomeZone(moodViewModel: MoodViewModel) {
     val scrollState = rememberScrollState()
     Column(
         modifier = Modifier.verticalScroll(scrollState)
@@ -23,21 +23,21 @@ fun RecognizeZone(moodViewModel: MoodViewModel) {
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.Center
         ) {
-            Question(ResString.questionRecognizing)
+            Question(ResString.questionBecoming)
         }
 
         Spacer(Modifier.size(20.dp))
 
-        val currentMoodState = moodViewModel.currentMood.collectAsState()
+        val desiredMoodState = moodViewModel.desiredMood.collectAsState()
 
         MoodMeterGraph(
             moodMeter = MoodMeter(),
-            moodState = currentMoodState.value,
+            moodState = desiredMoodState.value,
             onMoodChange = {
-                it?.let { moodViewModel.setCurrentMood(it) }
+                it?.let { moodViewModel.setDesiredMood(it) }
             },
             onMoodReset = {
-                moodViewModel.resetCurrentMood()
+                moodViewModel.resetDesiredMood()
             }
         )
     }

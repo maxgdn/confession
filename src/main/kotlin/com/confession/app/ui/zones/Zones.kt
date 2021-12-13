@@ -1,10 +1,16 @@
 package com.confession.app.ui.zones
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import com.confession.app.service.AccomplishViewModel
+import com.confession.app.service.MoodViewModel
+import com.confession.app.service.ReflectViewModel
 import com.confession.app.service.RemarkViewModel
 import com.confession.app.ui.main.zones.*
 import com.confession.app.ui.zones.Zone.*
@@ -63,19 +69,33 @@ fun Zones(
     Column {
         scope.content()
 
+        //view models
+        val moodViewModel = koinApplication.koin.get<MoodViewModel>()
+        val reflectViewModel = koinApplication.koin.get<ReflectViewModel>()
+        val remarkViewModel = koinApplication.koin.get<RemarkViewModel>()
+        val accomplishViewModel = koinApplication.koin.get<AccomplishViewModel>()
+
+        Spacer(Modifier.size(20.dp))
+
         when(zones[index.value]) {
             Recognize -> {
-                RecognizeZone()
+                RecognizeZone(moodViewModel)
+            }
+            Reflect -> {
+                ReflectZone(
+                    moodViewModel,
+                    reflectViewModel
+                )
             }
             Become -> {
-
+                BecomeZone(moodViewModel)
             }
             Remark -> {
-                val remarkViewModel = koinApplication.koin.get<RemarkViewModel>()
+
                 RemarkZone(remarkViewModel)
             }
             Accomplish -> {
-                val accomplishViewModel = koinApplication.koin.get<AccomplishViewModel>()
+
                 AccomplishZone(accomplishViewModel)
             }
             Preview -> {
