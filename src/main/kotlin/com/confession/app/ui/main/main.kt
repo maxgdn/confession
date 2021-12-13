@@ -15,7 +15,7 @@ fun main() = application {
     Window(
         onCloseRequest = { exitApplication() },
         title = ResString.appName,
-        state = rememberWindowState(width = 300.dp, height = 300.dp)
+        state = rememberWindowState(width = 1080.dp, height = 720.dp)
     ) {
         MaterialTheme {
             Zones(

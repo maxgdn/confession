@@ -21,6 +21,7 @@ import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.input.pointer.pointerMoveFilter
 import androidx.compose.ui.layout.onGloballyPositioned
@@ -335,30 +336,96 @@ fun MoodMeterGraph(moodMeter: MoodMeter) {
             val nearest = nearestMoodElements.value
 
             if(nearest.isNotEmpty()) {
-                LazyVerticalGrid(
-                    cells = GridCells.Fixed(3),
-                    modifier = Modifier.border(1.dp, Color.Red),
-                    verticalArrangement = Arrangement.Center,
-                    horizontalArrangement = Arrangement.End,
-                    contentPadding = PaddingValues(40.dp)
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    items(nearest.size) { index ->
-                        Box(
-                            contentAlignment = Alignment.Center
-                        ) {
-                            val moodMeterElement = nearest[index]
-
-                            if(moodMeterElement == null) Text(" ")
-                            else {
-                                Text(
-                                    text = moodMeterElement.mood.name,
-                                    fontWeight = if(selected == moodMeterElement) FontWeight.Bold else FontWeight.Normal,
-                                )
-                            }
-                        }
+                    NearestRow {
+                        NearestElement(
+                            modifier = Modifier.weight(1f, fill = true),
+                            moodMeterElement = nearest[0],
+                            selected = selected
+                        )
+                        NearestElement(
+                            modifier = Modifier.weight(1f, fill = true),
+                            moodMeterElement = nearest[1],
+                            selected = selected
+                        )
+                        NearestElement(
+                            modifier = Modifier.weight(1f, fill = true),
+                            moodMeterElement = nearest[2],
+                            selected = selected
+                        )
+                    }
+                    NearestRow {
+                        NearestElement(
+                            modifier = Modifier.weight(1f, fill = true),
+                            moodMeterElement = nearest[3],
+                            selected = selected
+                        )
+                        NearestElement(
+                            modifier = Modifier.weight(1f, fill = true),
+                            moodMeterElement = nearest[4],
+                            selected = selected
+                        )
+                        NearestElement(
+                            modifier = Modifier.weight(1f, fill = true),
+                            moodMeterElement = nearest[5],
+                            selected = selected
+                        )
+                    }
+                    NearestRow {
+                        NearestElement(
+                            modifier = Modifier.weight(1f, fill = true),
+                            moodMeterElement = nearest[6],
+                            selected = selected
+                        )
+                        NearestElement(
+                            modifier = Modifier.weight(1f, fill = true),
+                            moodMeterElement = nearest[7],
+                            selected = selected
+                        )
+                        NearestElement(
+                            modifier = Modifier.weight(1f, fill = true),
+                            moodMeterElement = nearest[8],
+                            selected = selected
+                        )
                     }
                 }
             }
+        }
+    }
+}
+
+@Composable
+fun NearestRow(
+    content: @Composable() () -> Unit
+) {
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.Center
+
+    ) {
+        content()
+    }
+}
+
+@Composable
+fun NearestElement(
+    modifier: Modifier,
+    moodMeterElement: MoodMeterElement?,
+    selected: MoodMeterElement?,
+) {
+    Box(
+        modifier = modifier,
+        contentAlignment = Alignment.Center
+    ) {
+        if(moodMeterElement == null) Text(" ")
+        else {
+            Text(
+                text = moodMeterElement.mood.name,
+                fontWeight = if(selected == moodMeterElement) FontWeight.Bold else FontWeight.Normal,
+                textAlign = TextAlign.Center
+            )
         }
     }
 }
