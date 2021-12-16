@@ -6,10 +6,8 @@ import java.awt.Color
 import java.awt.image.BufferedImage
 import java.io.ByteArrayOutputStream
 import org.jetbrains.skia.Image
-import java.awt.Font
 import java.awt.FontMetrics
 import javax.imageio.ImageIO
-import kotlin.math.exp
 import kotlin.math.pow
 import kotlin.math.sqrt
 
@@ -35,24 +33,24 @@ class MoodMeterGraphics {
             // create a string with yellow
             g2d.color = Color.black
 
-            val moodString = "${moodMeterElement?.mood}"
+            val moodString = moodMeterElement?.let{ "${moodMeterElement.mood} ${moodMeterElement.pleasantness} ${moodMeterElement.energy}" } ?: "No mood found"
 
-            val centerTextWidth = (width - metrics.stringWidth(moodString))/2
+            g2d.font = g2d.font.deriveFont(24f)
+            val centerTextWidth = (width)/2 - metrics.stringWidth(moodString)
 
-            println(centerTextWidth)
+            g2d.drawString(moodString, centerTextWidth, (height - (height * .10)).toInt())
 
-            //g2d.drawString("Java Code Geeks", centerTextWidth, (height - (height * .10)).toInt())
+            val size = 12
+            val sizeFloat = size.toFloat()
 
-            //draw horizontal lines
-
-            for (i in 1..10) {
-                val factor = i.div(10f)
+            for (i in 1..size) {
+                val factor = i.div(sizeFloat)
                 val lineHeight = ((height * factor)).toInt()
                 g2d.drawLine(0, lineHeight, width, lineHeight)
             }
 
-            for (i in 1..10) {
-                val factor = i.div(10f)
+            for (i in 1..size) {
+                val factor = i.div(sizeFloat)
                 val lineHeight = ((width * factor)).toInt()
                 g2d.drawLine(lineHeight, 0, lineHeight, height)
             }
@@ -60,8 +58,8 @@ class MoodMeterGraphics {
             val centerX = width/2
             val centerY = height/2
 
-            var x = (width.div(2))
-            var y = (height.div(2))
+            var x = centerX
+            var y = centerY
 
             val computeCircleCoordinates = {
                 if(moodMeterElement != null) {
@@ -70,14 +68,8 @@ class MoodMeterGraphics {
                     val energy = moodMeterElement.energy.times(-1)
 
                     //calculate position from the center
-
-                    println("MOOD ${moodMeterElement.mood} X ${pleasantness} Y ${energy}")
-
-                    x = centerX + (width.times(pleasantness.div(10f))).toInt()
-                    y = centerY + (height.times(energy.div(10f))).toInt()
-
-                    println("X ${x} Y ${y}")
-
+                    x = centerX + (width.times(pleasantness.div(sizeFloat))).toInt()
+                    y = centerY + (height.times(energy.div(sizeFloat))).toInt()
                 }
             }
 
@@ -96,8 +88,6 @@ class MoodMeterGraphics {
             drawCenteredCircle(width/2, height/2, radius)
 
             g2d.dispose()
-
-            println()
 
             val stream = ByteArrayOutputStream()
             ImageIO.write(bufferedImage, "PNG", stream)

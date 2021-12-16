@@ -58,8 +58,8 @@ fun PreviewZone(
                             LaunchedEffect(confessionResponse) {
                                 val buffer = MoodMeterGraphics.getMoodElementAsImage(
                                     confessionResponse.presentMood,
-                                    width = 500,
-                                    height = 500
+                                    width = 720,
+                                    height = 720
 
                                 )
                                 imageBitmap.value = buffer
