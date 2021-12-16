@@ -4,12 +4,14 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.confession.app.ResString
 import com.confession.app.service.MoodViewModel
 import com.confession.app.service.ReflectViewModel
+import com.confession.app.ui.misc.ResetButton
 import com.confession.app.ui.qa.QAPrompt
 
 @Composable
@@ -26,15 +28,17 @@ fun ReflectZone(
             modifier = Modifier.fillMaxWidth(1/3f),
             horizontalArrangement = Arrangement.Center
         ) {
-            val currentMood = moodViewModel.currentMood.value
+            val currentMoodState = moodViewModel.currentMood.collectAsState()
+            val currentMood = currentMoodState.value
 
-            val understandingAnswerState = reflectViewModel.understandingAnswer.value
+            val understandingAnswerState = reflectViewModel.understandingAnswer.collectAsState()
+            val understandingAnswer = understandingAnswerState.value
 
             QAPrompt(
                 questionText = String.format(ResString.questionUnderstanding,
                     currentMood?.mood ?: ResString.questionUnderstandingEmpty
                 ),
-                answerState = understandingAnswerState,
+                answerState = understandingAnswer,
                 onAnswerChange = {
                     reflectViewModel.setUnderstandingAnswer(it)
                 }
@@ -47,11 +51,12 @@ fun ReflectZone(
             modifier = Modifier.fillMaxWidth(1/3f),
             horizontalArrangement = Arrangement.Center
         ) {
-            val expressingAnswerState = reflectViewModel.expressingAnswer.value
+            val expressingAnswerState = reflectViewModel.expressingAnswer.collectAsState()
+            val expressingAnswer = expressingAnswerState.value
 
             QAPrompt(
                 questionText = ResString.questionExpressing,
-                answerState = expressingAnswerState,
+                answerState = expressingAnswer,
                 onAnswerChange = {
                     reflectViewModel.setExpressingAnswer(it)
                 }
@@ -64,15 +69,25 @@ fun ReflectZone(
             modifier = Modifier.fillMaxWidth(1/3f),
             horizontalArrangement = Arrangement.Center
         ) {
-            val regulatingAnswerState = reflectViewModel.regulatingAnswer.value
+            val regulatingAnswerState = reflectViewModel.regulatingAnswer.collectAsState()
+            val regulatingAnswer = regulatingAnswerState.value
 
             QAPrompt(
                 questionText = ResString.questionRegulating,
-                answerState = regulatingAnswerState,
+                answerState = regulatingAnswer,
                 onAnswerChange = {
                     reflectViewModel.setRegulatingAnswer(it)
                 }
             )
         }
+
+        ResetButton(
+            onReset = {
+                val emptyString = ""
+                reflectViewModel.setUnderstandingAnswer(emptyString)
+                reflectViewModel.setExpressingAnswer(emptyString)
+                reflectViewModel.setRegulatingAnswer(emptyString)
+            }
+        )
     }
 }

@@ -37,6 +37,7 @@ import com.confession.app.ResString
 import com.confession.app.meter.MoodMeter
 import com.confession.app.meter.MoodMeterElement
 import com.confession.app.model.MoodQuadrant
+import com.confession.app.ui.misc.ResetButton
 import com.confession.app.util.gradientBackground
 import kotlin.math.sqrt
 import kotlin.properties.Delegates
@@ -410,21 +411,13 @@ fun MoodMeterGraph(
 
             Spacer(Modifier.size(10.dp))
 
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.Center
-            ) {
-                Button(
-                    onClick = {
-                        selectedMoodMeterElement.value = null
-                        onMoodReset()
-                    }
-                ) {
-                    Text(
-                        text = ResString.reset
-                    )
+
+            ResetButton(
+                onReset = {
+                    selectedMoodMeterElement.value = null
+                    onMoodReset()
                 }
-            }
+            )
         }
     }
 }

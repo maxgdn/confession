@@ -5,8 +5,6 @@ import com.confession.app.repository.RemarkRepository
 import com.confession.app.util.Resource
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asFlow
-import kotlinx.coroutines.flow.collect
 
 class RemarkViewModel(remarkRepository: RemarkRepository) {
     private val repository = remarkRepository

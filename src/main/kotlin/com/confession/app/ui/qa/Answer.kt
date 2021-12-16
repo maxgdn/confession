@@ -7,6 +7,7 @@ import androidx.compose.material.TextField
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -17,7 +18,11 @@ fun Answer(
     answerState: String,
     onAnswerChange: (String) -> Unit
 ) {
-    val answerTextValue = remember { mutableStateOf(TextFieldValue(answerState)) }
+    val answerTextValue = remember { mutableStateOf("") }
+
+    LaunchedEffect(answerState) {
+        answerTextValue.value = answerState
+    }
 
     TextField(
         modifier = Modifier.fillMaxWidth(),
@@ -25,12 +30,12 @@ fun Answer(
         singleLine = false,
         onValueChange = {
             answerTextValue.value = it
-            onAnswerChange(it.text)
+            onAnswerChange(it)
         },
         trailingIcon = {
             Icon(
                 modifier = Modifier.clickable {
-                    answerTextValue.value = TextFieldValue()
+                    answerTextValue.value = ""
                     onAnswerChange("")
                 },
                 imageVector = Icons.Default.Close,

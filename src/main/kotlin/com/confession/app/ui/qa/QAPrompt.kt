@@ -21,6 +21,8 @@ fun QAPrompt(
 
         Spacer(Modifier.size(10.dp))
 
+        println("UPDATE ${answerState}")
+
         Answer(
             answerState = answerState,
             onAnswerChange = onAnswerChange

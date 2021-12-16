@@ -14,6 +14,7 @@ import androidx.compose.ui.unit.dp
 import com.confession.app.ResString
 import com.confession.app.service.MoodViewModel
 import com.confession.app.service.RemarkViewModel
+import com.confession.app.ui.misc.ResetButton
 import com.confession.app.ui.qa.QAPrompt
 import kotlinx.coroutines.launch
 
@@ -33,16 +34,20 @@ fun RemarkZone(
             modifier = Modifier.fillMaxWidth(1/3f),
             horizontalArrangement = Arrangement.Center
         ) {
-            val desiredMood = moodViewModel.desiredMood.value
+            val desiredMoodState = moodViewModel.desiredMood.collectAsState()
+            val desiredMood = desiredMoodState.value
 
-            val howCanIFeelState = remarkViewModel.howCanYouFeel.value
+            val howCanIFeelState = remarkViewModel.howCanYouFeel.collectAsState()
+            val howCanIFeel = howCanIFeelState.value
+
+            println(howCanIFeel)
 
             QAPrompt(
                 questionText = String.format(
                     ResString.questionHowCanYouFeel,
                     desiredMood?.mood ?: ResString.questionHowCanYouFeelEmpty
                 ),
-                answerState = howCanIFeelState,
+                answerState = howCanIFeel,
                 onAnswerChange = {
                     remarkViewModel.setHowCanYouFeelAnswer(it)
                 }
@@ -55,11 +60,12 @@ fun RemarkZone(
             modifier = Modifier.fillMaxWidth(1/3f),
             horizontalArrangement = Arrangement.Center
         ) {
-            val oneThingWellAnswerState = remarkViewModel.oneThingWell.value
+            val oneThingWellAnswerState = remarkViewModel.oneThingWell.collectAsState()
+            val oneThingWellAnswer = oneThingWellAnswerState.value
 
             QAPrompt(
                 questionText = ResString.questionOneThingDoneWell,
-                answerState = oneThingWellAnswerState,
+                answerState = oneThingWellAnswer,
                 onAnswerChange = {
                     remarkViewModel.setDoingOneThingWell(it)
                 }
@@ -72,17 +78,27 @@ fun RemarkZone(
             modifier = Modifier.fillMaxWidth(1/3f),
             horizontalArrangement = Arrangement.Center
         ) {
-            val regulatingAnswerState = remarkViewModel.oneThingToImproveOn.value
+            val regulatingAnswerState = remarkViewModel.oneThingToImproveOn.collectAsState()
+            val regulatingAnswer = regulatingAnswerState.value
 
             QAPrompt(
                 questionText = ResString.questionOneThingToImproveOn,
-                answerState = regulatingAnswerState,
+                answerState = regulatingAnswer,
                 onAnswerChange = {
                     remarkViewModel.setOneThingToImproveOn(it)
                 }
             )
         }
     }
+
+    ResetButton(
+        onReset = {
+            val emptyString = ""
+            remarkViewModel.setHowCanYouFeelAnswer(emptyString)
+            remarkViewModel.setDoingOneThingWell(emptyString)
+            remarkViewModel.setOneThingToImproveOn(emptyString)
+        }
+    )
 
     //one thing to improve on
 
