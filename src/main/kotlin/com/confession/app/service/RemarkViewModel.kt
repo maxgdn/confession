@@ -14,36 +14,24 @@ class RemarkViewModel(remarkRepository: RemarkRepository) {
     private val _remarkState: MutableStateFlow<Resource<List<Remark>>> = MutableStateFlow(Resource.none(null))
     val remarkState: StateFlow<Resource<List<Remark>>> = _remarkState
 
-    suspend fun fetchAll() {
-        repository.getRemarks().collect {
-            try {
-                _remarkState.value = Resource.success(it)
-            } catch (e: Exception) {
-                _remarkState.value = Resource.error(
-                    msg = "Failed to get remarks",
-                    data = null
-                )
-            }
-        }
+    private val _howCanYouFeel: MutableStateFlow<String> = MutableStateFlow("")
+    val howCanYouFeel: StateFlow<String> = _howCanYouFeel
+
+    private val _oneThingWell: MutableStateFlow<String> = MutableStateFlow("")
+    val oneThingWell: StateFlow<String> = _oneThingWell
+
+    private val _oneThingToImproveOn: MutableStateFlow<String> = MutableStateFlow("")
+    val oneThingToImproveOn: StateFlow<String> = _oneThingToImproveOn
+
+    fun setHowCanYouFeelAnswer(text: String) {
+        _howCanYouFeel.value = text
     }
 
-    suspend fun createRemark(
-        question: String,
-        answer: String,
-    ): Resource<Remark> {
-        return try {
-            repository.createOne(
-                question = question,
-                answer = answer
-            )
-            return Resource.success(
-                null
-            )
-        } catch (e: Exception) {
-            Resource.error(
-                data = null,
-                msg = "Failed to create remark"
-            )
-        }
+    fun setDoingOneThingWell(text: String) {
+        _oneThingWell.value = text
+    }
+
+    fun setOneThingToImproveOn(text: String) {
+        _oneThingToImproveOn.value = text
     }
 }

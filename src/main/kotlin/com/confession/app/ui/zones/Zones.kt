@@ -92,7 +92,7 @@ fun Zones(
             }
             Remark -> {
 
-                RemarkZone(remarkViewModel)
+                RemarkZone(remarkViewModel, moodViewModel)
             }
             Accomplish -> {
 

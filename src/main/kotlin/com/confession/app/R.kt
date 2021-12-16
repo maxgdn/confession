@@ -15,6 +15,10 @@ object ResString {
     val questionExpressing: String
     val questionRegulating: String
     val questionBecoming: String
+    val questionHowCanYouFeel: String
+    val questionHowCanYouFeelEmpty: String
+    val questionOneThingDoneWell: String
+    val questionOneThingToImproveOn: String
 
     init {
         appName = "Confession"
@@ -32,5 +36,11 @@ object ResString {
         questionExpressing = "How are you showing your feeling?"
         questionRegulating = "What are you doing to feel more, less, or the same of that same feeling?"
         questionBecoming = "How would you like to feel?"
+
+        questionHowCanYouFeel = "How can you feel %s?"
+        questionHowCanYouFeelEmpty = "better"
+
+        questionOneThingDoneWell = "What is one thing you are doing well?"
+        questionOneThingToImproveOn = "What is one thing you can improve on?"
     }
 }

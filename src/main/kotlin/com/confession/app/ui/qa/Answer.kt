@@ -1,7 +1,11 @@
 package com.confession.app.ui.qa
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.material.Icon
 import androidx.compose.material.TextField
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -22,6 +26,16 @@ fun Answer(
         onValueChange = {
             answerTextValue.value = it
             onAnswerChange(it.text)
+        },
+        trailingIcon = {
+            Icon(
+                modifier = Modifier.clickable {
+                    answerTextValue.value = TextFieldValue()
+                    onAnswerChange("")
+                },
+                imageVector = Icons.Default.Close,
+                contentDescription = ""
+            )
         }
     )
 }
