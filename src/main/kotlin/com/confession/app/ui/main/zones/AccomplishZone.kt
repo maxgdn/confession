@@ -34,10 +34,8 @@ fun AccomplishZone(accomplishViewModel: AccomplishViewModel) {
     val tasksState = accomplishViewModel.tasksState.collectAsState()
     val tasks = tasksState.value
 
-
     val taskToCreateTextValue = remember { mutableStateOf(TextFieldValue()) }
     val taskToCreateDuration = remember { mutableStateOf(Duration.minutes(1)) }
-
 
     Column(
         modifier = Modifier.fillMaxWidth(),

@@ -39,4 +39,8 @@ class AccomplishViewModel() {
         _tasksState.value = mutableList
     }
 
+    fun reset() {
+        _tasksState.value = emptyList()
+    }
+
 }

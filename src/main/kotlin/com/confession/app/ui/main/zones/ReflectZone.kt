@@ -83,10 +83,7 @@ fun ReflectZone(
 
         ResetButton(
             onReset = {
-                val emptyString = ""
-                reflectViewModel.setUnderstandingAnswer(emptyString)
-                reflectViewModel.setExpressingAnswer(emptyString)
-                reflectViewModel.setRegulatingAnswer(emptyString)
+                reflectViewModel.reset()
             }
         )
     }

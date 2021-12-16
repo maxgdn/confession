@@ -25,4 +25,11 @@ class ReflectViewModel() {
         _regulatingAnswer.value = text
     }
 
+    fun reset() {
+        val emptyString = ""
+        this.setUnderstandingAnswer(emptyString)
+        this.setExpressingAnswer(emptyString)
+        this.setRegulatingAnswer(emptyString)
+    }
+
 }

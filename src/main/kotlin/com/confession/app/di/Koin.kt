@@ -2,10 +2,7 @@ package com.confession.app.di
 
 import com.confession.app.repository.RemarkRepository
 import com.confession.app.repository.RemarkRepositoryImpl
-import com.confession.app.service.AccomplishViewModel
-import com.confession.app.service.MoodViewModel
-import com.confession.app.service.ReflectViewModel
-import com.confession.app.service.RemarkViewModel
+import com.confession.app.service.*
 import org.koin.core.context.GlobalContext.startKoin
 import org.koin.dsl.KoinAppDeclaration
 import org.koin.dsl.module
@@ -29,4 +26,5 @@ val viewModelModule = module {
     single { AccomplishViewModel() }
     single { MoodViewModel() }
     single { ReflectViewModel() }
+    single { ConfessionViewModel(get(),get(),get(),get()) }
 }

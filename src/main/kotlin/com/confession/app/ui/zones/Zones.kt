@@ -8,10 +8,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.confession.app.service.AccomplishViewModel
-import com.confession.app.service.MoodViewModel
-import com.confession.app.service.ReflectViewModel
-import com.confession.app.service.RemarkViewModel
+import com.confession.app.service.*
 import com.confession.app.ui.main.zones.*
 import com.confession.app.ui.zones.Zone.*
 import org.koin.core.KoinApplication
@@ -74,6 +71,7 @@ fun Zones(
         val reflectViewModel = koinApplication.koin.get<ReflectViewModel>()
         val remarkViewModel = koinApplication.koin.get<RemarkViewModel>()
         val accomplishViewModel = koinApplication.koin.get<AccomplishViewModel>()
+        val confessionViewModel = koinApplication.koin.get<ConfessionViewModel>()
 
         Spacer(Modifier.size(20.dp))
 
@@ -91,7 +89,6 @@ fun Zones(
                 BecomeZone(moodViewModel)
             }
             Remark -> {
-
                 RemarkZone(remarkViewModel, moodViewModel)
             }
             Accomplish -> {
@@ -99,7 +96,7 @@ fun Zones(
                 AccomplishZone(accomplishViewModel)
             }
             Preview -> {
-                PreviewZone()
+                PreviewZone(confessionViewModel)
             }
             Export -> {
                 ExportZone()

@@ -32,4 +32,11 @@ class RemarkViewModel(remarkRepository: RemarkRepository) {
     fun setOneThingToImproveOn(text: String) {
         _oneThingToImproveOn.value = text
     }
+
+    fun reset() {
+        val emptyString = ""
+        this.setHowCanYouFeelAnswer(emptyString)
+        this.setDoingOneThingWell(emptyString)
+        this.setOneThingToImproveOn(emptyString)
+    }
 }

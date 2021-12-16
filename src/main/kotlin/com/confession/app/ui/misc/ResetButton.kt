@@ -11,6 +11,7 @@ import com.confession.app.ResString
 
 @Composable
 fun ResetButton(
+    title: String = ResString.reset,
     onReset: () -> Unit
 ) {
     Row(
@@ -23,7 +24,7 @@ fun ResetButton(
             }
         ) {
             Text(
-                text = ResString.reset
+                text = title
             )
         }
     }

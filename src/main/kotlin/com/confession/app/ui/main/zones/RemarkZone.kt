@@ -40,8 +40,6 @@ fun RemarkZone(
             val howCanIFeelState = remarkViewModel.howCanYouFeel.collectAsState()
             val howCanIFeel = howCanIFeelState.value
 
-            println(howCanIFeel)
-
             QAPrompt(
                 questionText = String.format(
                     ResString.questionHowCanYouFeel,
@@ -78,12 +76,12 @@ fun RemarkZone(
             modifier = Modifier.fillMaxWidth(1/3f),
             horizontalArrangement = Arrangement.Center
         ) {
-            val regulatingAnswerState = remarkViewModel.oneThingToImproveOn.collectAsState()
-            val regulatingAnswer = regulatingAnswerState.value
+            val oneThingToImproveOnState = remarkViewModel.oneThingToImproveOn.collectAsState()
+            val oneThingToImproveOn = oneThingToImproveOnState.value
 
             QAPrompt(
                 questionText = ResString.questionOneThingToImproveOn,
-                answerState = regulatingAnswer,
+                answerState = oneThingToImproveOn,
                 onAnswerChange = {
                     remarkViewModel.setOneThingToImproveOn(it)
                 }
@@ -93,13 +91,8 @@ fun RemarkZone(
 
     ResetButton(
         onReset = {
-            val emptyString = ""
-            remarkViewModel.setHowCanYouFeelAnswer(emptyString)
-            remarkViewModel.setDoingOneThingWell(emptyString)
-            remarkViewModel.setOneThingToImproveOn(emptyString)
+            remarkViewModel.reset()
         }
     )
-
-    //one thing to improve on
 
 }
