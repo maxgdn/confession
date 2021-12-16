@@ -28,6 +28,10 @@ object ResString {
     val noPresentMood: String
     val noDesiredMood: String
 
+    val exportPDF: String
+    val exportPrint: String
+    val exportReceipt: String
+
     val timeFormat: String
 
     init {
@@ -55,6 +59,10 @@ object ResString {
 
         questionOneThingDoneWell = "What is one thing you are doing well?"
         questionOneThingToImproveOn = "What is one thing you can improve on?"
+
+        exportPDF = "PDF"
+        exportPrint = "Print"
+        exportReceipt = "Receipt"
 
         problemGeneratingConfession = "A problem occurred in generating the confession."
         noPresentMood = "No Present Mood"
