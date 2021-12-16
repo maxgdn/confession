@@ -28,7 +28,6 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import kotlin.time.ExperimentalTime
 
-
 @Composable
 fun PreviewMoodImage(
     confessionResponse: ConfessionResponse,
@@ -146,7 +145,7 @@ fun PreviewZone(
                         presentMood?.let {
                             MoodText(ResString.presentMood,it)
                         } ?: Text(
-                            text = "",
+                            text = ResString.noPresentMood,
                             fontWeight = FontWeight.Bold,
                             fontSize = 14.sp
                         )
@@ -183,7 +182,7 @@ fun PreviewZone(
                         desiredMood?.let {
                             MoodText(ResString.desiredMood,it)
                         } ?: Text(
-                            text = "",
+                            text = ResString.noDesiredMood,
                             fontWeight = FontWeight.Bold,
                             fontSize = 14.sp
                         )

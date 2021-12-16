@@ -25,6 +25,8 @@ object ResString {
     val questionOneThingToImproveOn: String
 
     val problemGeneratingConfession: String
+    val noPresentMood: String
+    val noDesiredMood: String
 
     val timeFormat: String
 
@@ -55,6 +57,8 @@ object ResString {
         questionOneThingToImproveOn = "What is one thing you can improve on?"
 
         problemGeneratingConfession = "A problem occurred in generating the confession."
+        noPresentMood = "No Present Mood"
+        noDesiredMood = "No Desired Mood"
 
         timeFormat = "yyyy-MM-dd hh:mm:ss"
     }
