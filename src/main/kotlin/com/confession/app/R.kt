@@ -9,6 +9,10 @@ object ResString {
     val reset: String
     val energy: String
     val pleasantness: String
+    val presentMood: String
+    val desiredMood: String
+    val tasks: String
+
     val questionRecognizing: String
     val questionUnderstanding: String
     val questionUnderstandingEmpty: String
@@ -20,6 +24,10 @@ object ResString {
     val questionOneThingDoneWell: String
     val questionOneThingToImproveOn: String
 
+    val problemGeneratingConfession: String
+
+    val timeFormat: String
+
     init {
         appName = "Confession"
         loading = "Loading"
@@ -28,6 +36,9 @@ object ResString {
         reset = "Reset"
         energy = "Energy"
         pleasantness = "Pleasantness"
+        presentMood = "Present Mood: "
+        desiredMood = "Desired Mood: "
+        tasks = "Tasks: "
 
         //Ruler
         questionRecognizing = "How are you feeling?"
@@ -42,5 +53,9 @@ object ResString {
 
         questionOneThingDoneWell = "What is one thing you are doing well?"
         questionOneThingToImproveOn = "What is one thing you can improve on?"
+
+        problemGeneratingConfession = "A problem occurred in generating the confession."
+
+        timeFormat = "yyyy-MM-dd hh:mm:ss"
     }
 }

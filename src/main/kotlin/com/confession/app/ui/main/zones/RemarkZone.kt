@@ -16,6 +16,7 @@ import com.confession.app.service.MoodViewModel
 import com.confession.app.service.RemarkViewModel
 import com.confession.app.ui.misc.ResetButton
 import com.confession.app.ui.qa.QAPrompt
+import com.confession.app.util.howCanYouFeelFormattedText
 import kotlinx.coroutines.launch
 
 @Composable
@@ -41,10 +42,7 @@ fun RemarkZone(
             val howCanIFeel = howCanIFeelState.value
 
             QAPrompt(
-                questionText = String.format(
-                    ResString.questionHowCanYouFeel,
-                    desiredMood?.mood ?: ResString.questionHowCanYouFeelEmpty
-                ),
+                questionText = howCanYouFeelFormattedText(desiredMood),
                 answerState = howCanIFeel,
                 onAnswerChange = {
                     remarkViewModel.setHowCanYouFeelAnswer(it)

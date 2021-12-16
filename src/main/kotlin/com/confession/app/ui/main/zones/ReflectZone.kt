@@ -13,6 +13,7 @@ import com.confession.app.service.MoodViewModel
 import com.confession.app.service.ReflectViewModel
 import com.confession.app.ui.misc.ResetButton
 import com.confession.app.ui.qa.QAPrompt
+import com.confession.app.util.understandingFormattedText
 
 @Composable
 fun ReflectZone(
@@ -35,9 +36,7 @@ fun ReflectZone(
             val understandingAnswer = understandingAnswerState.value
 
             QAPrompt(
-                questionText = String.format(ResString.questionUnderstanding,
-                    currentMood?.mood ?: ResString.questionUnderstandingEmpty
-                ),
+                questionText = understandingFormattedText(currentMood),
                 answerState = understandingAnswer,
                 onAnswerChange = {
                     reflectViewModel.setUnderstandingAnswer(it)

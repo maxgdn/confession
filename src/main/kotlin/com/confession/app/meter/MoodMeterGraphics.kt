@@ -33,13 +33,6 @@ class MoodMeterGraphics {
             // create a string with yellow
             g2d.color = Color.black
 
-            val moodString = moodMeterElement?.let{ "${moodMeterElement.mood} ${moodMeterElement.pleasantness} ${moodMeterElement.energy}" } ?: "No mood found"
-
-            g2d.font = g2d.font.deriveFont(24f)
-            val centerTextWidth = (width)/2 - metrics.stringWidth(moodString)
-
-            g2d.drawString(moodString, centerTextWidth, (height - (height * .10)).toInt())
-
             val size = 12
             val sizeFloat = size.toFloat()
 
