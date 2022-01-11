@@ -1,23 +1,29 @@
 package com.confession.app.ui.main.zones
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button
 import androidx.compose.material.Text
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Build
-import androidx.compose.material.icons.filled.Email
-import androidx.compose.material.icons.filled.Info
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.confession.app.ResString
+import com.confession.app.export.pdf.ConfessionPdf
+import com.confession.app.service.ConfessionViewModel
 
 @Composable
-fun ExportZone() {
+fun ExportZone(confessionViewModel: ConfessionViewModel) {
+
+    LaunchedEffect(true) {
+        confessionViewModel.generateResponse()
+    }
+
+    val responseState = confessionViewModel.response.collectAsState()
+    val confessionResponse = responseState.value
+
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -29,7 +35,11 @@ fun ExportZone() {
             ExportItem(
                 title = ResString.exportPDF,
                 onClick = {
-
+                    if (confessionResponse != null) {
+                        ConfessionPdf().create(confessionResponse)
+                    } else {
+                        //alert
+                    }
                 }
             )
 

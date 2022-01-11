@@ -21,6 +21,8 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.confession.app.model.Task
 import com.confession.app.service.AccomplishViewModel
+import com.confession.app.util.tasksAsString
+import com.confession.app.util.totalTaskTimeInHours
 import kotlinx.coroutines.launch
 import kotlin.time.Duration
 import kotlin.time.DurationUnit
@@ -104,16 +106,9 @@ fun AccomplishZone(accomplishViewModel: AccomplishViewModel) {
         }
         //Total Information
         Row {
-            val timeInHours =
-                if(tasks.isNotEmpty())
-                    tasks.map { it.duration }
-                        .reduce { acc, duration -> acc.plus(duration) }
-                        .toDouble(DurationUnit.HOURS)
-                else 0
-
-            val timeInHoursFormatted = "%.${4}f".format(timeInHours.toDouble())
-
-            Text("Number of Tasks: ${tasks.size} | $timeInHoursFormatted hours")
+            val timeInHours = totalTaskTimeInHours(tasks)
+            val formatted = tasksAsString(tasksSize = tasks.size, timeInHours)
+            Text(formatted)
         }
 
         LazyColumn(

@@ -33,6 +33,7 @@ object ResString {
     val exportReceipt: String
 
     val timeFormat: String
+    val fileTimeFormat: String
 
     init {
         appName = "Confession"
@@ -69,5 +70,6 @@ object ResString {
         noDesiredMood = "No Desired Mood"
 
         timeFormat = "yyyy-MM-dd hh:mm:ss"
+        fileTimeFormat = "yyyy_MM_dd_hh_mm"
     }
 }

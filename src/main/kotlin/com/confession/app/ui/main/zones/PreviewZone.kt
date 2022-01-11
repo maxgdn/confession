@@ -13,6 +13,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -37,13 +38,14 @@ fun PreviewMoodImage(
         val imageBitmap: MutableState<ImageBitmap?> = remember { mutableStateOf(null) }
 
         LaunchedEffect(confessionResponse) {
-            val buffer = MoodMeterGraphics.getMoodElementAsImage(
+            val bitmap = MoodMeterGraphics.getMoodElementAsImageBitmap(
                 moodMeterElement,
                 width = 250,
                 height = 250
 
             )
-            imageBitmap.value = buffer
+
+            imageBitmap.value = bitmap
         }
 
         imageBitmap.value?.let {
@@ -132,12 +134,18 @@ fun PreviewZone(
                     ) {
                         //Date
 
+                        Text(
+                            text = ResString.appName,
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 18.sp
+                        )
+
                         val now = LocalDateTime.now()
                         val displayPattern = DateTimeFormatter.ofPattern(ResString.timeFormat)
                         Text(
                             text = displayPattern.format(now),
                             fontWeight = FontWeight.Bold,
-                            fontSize = 16.sp
+                            fontSize = 18.sp
                         )
 
                         val presentMood = it.presentMood

@@ -34,6 +34,8 @@ dependencies {
 
     implementation("com.github.anastaciocintra:escpos-coffee:4.1.0")
 
+    implementation("org.apache.pdfbox:pdfbox:2.0.1")
+
     implementation("com.squareup.sqldelight:sqlite-driver:1.5.0")
     implementation("com.squareup.sqldelight:coroutines-extensions:1.5.0")
 

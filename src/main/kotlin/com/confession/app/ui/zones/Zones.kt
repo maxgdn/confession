@@ -39,7 +39,7 @@ data class ZonesScopeImpl(
 @Composable
 fun Zones(
     koinApplication: KoinApplication,
-    content: @Composable ZonesScope.() -> Unit
+    content: @Composable ZonesScope.() -> Unit,
 ) {
     val zones = values()
     val index = remember { mutableStateOf(0) }
@@ -99,7 +99,7 @@ fun Zones(
                 PreviewZone(confessionViewModel)
             }
             Export -> {
-                ExportZone()
+                ExportZone(confessionViewModel)
             }
         }
     }

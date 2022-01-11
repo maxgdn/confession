@@ -2,24 +2,25 @@ package com.confession.app.meter
 
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.asImageBitmap
-import java.awt.Color
-import java.awt.image.BufferedImage
-import java.io.ByteArrayOutputStream
 import org.jetbrains.skia.Image
+import java.awt.Color
 import java.awt.FontMetrics
+import java.awt.image.BufferedImage
+import java.io.ByteArrayInputStream
+import java.io.ByteArrayOutputStream
+import java.io.InputStream
 import javax.imageio.ImageIO
 import kotlin.math.pow
 import kotlin.math.sqrt
 
-
 class MoodMeterGraphics {
 
     companion object {
-        fun getMoodElementAsImage(
+        fun getMoodElementAsImageByteArray(
             moodMeterElement: MoodMeterElement?,
             width: Int = 250,
             height: Int = 250
-        ): ImageBitmap {
+        ): ByteArray {
             val bufferedImage = BufferedImage(width, height, BufferedImage.TYPE_BYTE_GRAY)
 
             val g2d = bufferedImage.createGraphics()
@@ -87,6 +88,25 @@ class MoodMeterGraphics {
 
             val bytes = stream.toByteArray()
 
+            return bytes
+        }
+
+        fun getMoodElementAsBufferedImage(
+            moodMeterElement: MoodMeterElement?,
+            width: Int = 250,
+            height: Int = 250
+        ): BufferedImage? {
+            val bytes = getMoodElementAsImageByteArray(moodMeterElement, width, height)
+            val stream: InputStream = ByteArrayInputStream(bytes)
+            return ImageIO.read(stream)
+        }
+
+        fun getMoodElementAsImageBitmap(
+            moodMeterElement: MoodMeterElement?,
+            width: Int = 250,
+            height: Int = 250
+        ): ImageBitmap {
+            val bytes = getMoodElementAsImageByteArray(moodMeterElement, width, height)
             return Image.makeFromEncoded(bytes).asImageBitmap()
         }
     }
