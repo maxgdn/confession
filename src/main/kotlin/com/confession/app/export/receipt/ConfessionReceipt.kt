@@ -1,11 +1,17 @@
 package com.confession.app.export.receipt
 
+import com.confession.app.usb.ConfessionUsb
 import com.github.anastaciocintra.escpos.EscPos
 import com.github.anastaciocintra.output.PrinterOutputStream
+import java.io.UnsupportedEncodingException
+import javax.usb.*
 
-class ConfessionReceipt {
+
+class ConfessionReceipt(val confessionUsbResource: ConfessionUsb.ConfessionUsbResource) {
 
     fun create(confessionReceipt: ConfessionReceipt?) {
+        confessionUsbResource.device
+
         PrinterOutputStream.getListPrintServicesNames().forEach {
             println(it)
         }
@@ -22,5 +28,6 @@ class ConfessionReceipt {
 }
 
 fun main() {
-    ConfessionReceipt().create(null)
+    //val r = ConfessionReceipt()
+
 }

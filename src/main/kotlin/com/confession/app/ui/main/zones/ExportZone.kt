@@ -1,19 +1,19 @@
 package com.confession.app.ui.main.zones
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Button
-import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
+import androidx.compose.material.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.Dialog
+import androidx.compose.ui.window.Window
 import com.confession.app.ResString
 import com.confession.app.export.pdf.ConfessionPdf
 import com.confession.app.service.ConfessionViewModel
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun ExportZone(confessionViewModel: ConfessionViewModel) {
 
@@ -23,6 +23,9 @@ fun ExportZone(confessionViewModel: ConfessionViewModel) {
 
     val responseState = confessionViewModel.response.collectAsState()
     val confessionResponse = responseState.value
+
+    val openDialog = remember { mutableStateOf(false)}
+    var isAskingToClose by remember { mutableStateOf(false) }
 
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -48,7 +51,8 @@ fun ExportZone(confessionViewModel: ConfessionViewModel) {
             ExportItem(
                 title = ResString.exportReceipt,
                 onClick = {
-
+                    //show alert dialog
+                    openDialog.value = true
                 }
             )
 
@@ -60,6 +64,34 @@ fun ExportZone(confessionViewModel: ConfessionViewModel) {
 
                 }
             )
+        }
+
+
+        if (openDialog.value) {
+            Dialog(
+                title = ResString.chooseAReceiptPrinter,
+                onCloseRequest = { openDialog.value = false }
+            ) {
+                Column {
+                    Text(
+                        text = ResString.chooseAReceiptPrinter,
+                        style = MaterialTheme.typography.h3
+                    )
+
+
+
+                    Button(
+                        onClick = {
+                            openDialog.value = false
+                        },
+                    ) {
+                        Text(
+                            text = ResString.Cancel,
+                            style = MaterialTheme.typography.h3
+                        )
+                    }
+                }
+            }
         }
     }
 }

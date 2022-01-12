@@ -32,6 +32,11 @@ object ResString {
     val exportPrint: String
     val exportReceipt: String
 
+    val chooseAReceiptPrinter: String
+
+    val OK: String
+    val Cancel: String
+
     val timeFormat: String
     val fileTimeFormat: String
 
@@ -68,6 +73,11 @@ object ResString {
         problemGeneratingConfession = "A problem occurred in generating the confession."
         noPresentMood = "No Present Mood"
         noDesiredMood = "No Desired Mood"
+
+        chooseAReceiptPrinter = "Choose a Receipt Printer"
+
+        OK = "Okay"
+        Cancel = "Cancel"
 
         timeFormat = "yyyy-MM-dd hh:mm:ss"
         fileTimeFormat = "yyyy_MM_dd_hh_mm"
