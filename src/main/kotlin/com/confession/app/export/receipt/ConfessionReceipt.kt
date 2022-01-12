@@ -1,33 +1,39 @@
 package com.confession.app.export.receipt
 
+import com.confession.app.model.ConfessionResponse
 import com.confession.app.usb.ConfessionUsb
+import com.confession.app.usb.UsbJavaStream
 import com.github.anastaciocintra.escpos.EscPos
-import com.github.anastaciocintra.output.PrinterOutputStream
-import java.io.UnsupportedEncodingException
-import javax.usb.*
+
+class ConfessionReceipt(private val confessionUsbResource: ConfessionUsb.ConfessionUsbResource) {
+
+    fun create(confessionResponse: ConfessionResponse) {
+        val device = confessionUsbResource.device
+        device?.let {
+            val stream = UsbJavaStream(device)
+
+            var a = ""
+
+            for(i in 1..32) {
+                a += "a"
+            }
+            println(a.length)
 
 
-class ConfessionReceipt(val confessionUsbResource: ConfessionUsb.ConfessionUsbResource) {
+            val beep = byteArrayOf(0x1b, 0x42, 0x02, 0x01)
 
-    fun create(confessionReceipt: ConfessionReceipt?) {
-        confessionUsbResource.device
+            val test = byteArrayOf(0x1d, 0x28, 0x41)
+            val escPos = EscPos(stream)
+            escPos.writeLF("Hello Usb4Java")
+                .writeLF("Another Line")
+                .feed(10)
+                .writeLF(a)
+                .writeLF("Test")
+                .write(test, 0, test.size)
+                .writeLF("Number 2")
+                .write(beep, 0, beep.size)
+                .cut(EscPos.CutMode.FULL)
 
-        PrinterOutputStream.getListPrintServicesNames().forEach {
-            println(it)
         }
-        val printService = PrinterOutputStream.getDefaultPrintService()
-        val printerOutputStream = PrinterOutputStream(printService)
-        val escpos = EscPos(printerOutputStream)
-
-        escpos.writeLF("Hello Wold");
-        escpos.feed(5);
-        escpos.cut(EscPos.CutMode.FULL);
-        escpos.close();
-
     }
-}
-
-fun main() {
-    //val r = ConfessionReceipt()
-
 }

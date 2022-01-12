@@ -21,7 +21,7 @@ class UsbJavaStream(
         val pipedInputStream = PipedInputStream()
         super.connect(pipedInputStream)
 
-        GlobalScope.launch(Dispatchers.Main) {
+        GlobalScope.launch(Dispatchers.IO) {
             try {
                 val configuration = device.usbConfigurations.first() as UsbConfiguration
                 val usbInterface = configuration.usbInterfaces.first() as UsbInterface
@@ -49,7 +49,7 @@ class UsbJavaStream(
                     usbInterface.release()
                 }
             } catch (ex: Exception) {
-                //throw RuntimeException(ex)
+                throw RuntimeException(ex)
             }
         }
 

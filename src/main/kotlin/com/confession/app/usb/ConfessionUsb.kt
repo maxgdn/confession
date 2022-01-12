@@ -150,17 +150,3 @@ class ConfessionUsb {
     }
 
 }
-
-fun main() {
-    val list = ConfessionUsb.getUSBDevices()
-    val target = list[1]
-
-    val stream = UsbJavaStream(target.device!!)
-
-    val escPos = EscPos(stream)
-    println("NOPE")
-    escPos.writeLF("Hello Usb4Java")
-        .writeLF("Another Line")
-        .feed(10)
-        .cut(EscPos.CutMode.FULL)
-}

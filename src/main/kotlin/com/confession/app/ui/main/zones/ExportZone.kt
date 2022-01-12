@@ -1,5 +1,6 @@
 package com.confession.app.ui.main.zones
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.*
@@ -11,7 +12,9 @@ import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.Window
 import com.confession.app.ResString
 import com.confession.app.export.pdf.ConfessionPdf
+import com.confession.app.export.receipt.ConfessionReceipt
 import com.confession.app.service.ConfessionViewModel
+import com.confession.app.usb.ConfessionUsb
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -68,7 +71,7 @@ fun ExportZone(confessionViewModel: ConfessionViewModel) {
 
 
         if (openDialog.value) {
-            Dialog(
+            Window(
                 title = ResString.chooseAReceiptPrinter,
                 onCloseRequest = { openDialog.value = false }
             ) {
@@ -78,7 +81,19 @@ fun ExportZone(confessionViewModel: ConfessionViewModel) {
                         style = MaterialTheme.typography.h3
                     )
 
+                    val list = remember { ConfessionUsb.getUSBDevices() }
 
+                    list.forEach {
+                        Text(
+                            text = it.name,
+                            modifier = Modifier.clickable {
+                                val confessionReceipt = ConfessionReceipt(it)
+                                if (confessionResponse != null) {
+                                    confessionReceipt.create(confessionResponse)
+                                }
+                            }
+                        )
+                    }
 
                     Button(
                         onClick = {
