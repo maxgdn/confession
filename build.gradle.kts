@@ -35,6 +35,8 @@ dependencies {
     implementation("com.github.anastaciocintra:escpos-coffee:4.1.0")
 
     implementation("org.usb4java:usb4java:1.3.0")
+    implementation("org.usb4java:usb4java-javax:1.3.0")
+
 
     implementation("org.apache.pdfbox:pdfbox:2.0.1")
 
