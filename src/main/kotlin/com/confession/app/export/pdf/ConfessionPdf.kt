@@ -4,10 +4,7 @@ import com.confession.app.ResString
 import com.confession.app.meter.MoodMeterElement
 import com.confession.app.meter.MoodMeterGraphics
 import com.confession.app.model.ConfessionResponse
-import com.confession.app.util.howCanYouFeelFormattedText
-import com.confession.app.util.tasksAsString
-import com.confession.app.util.totalTaskTimeInHours
-import com.confession.app.util.understandingFormattedText
+import com.confession.app.util.*
 import org.apache.pdfbox.pdmodel.PDDocument
 import org.apache.pdfbox.pdmodel.PDDocumentInformation
 import org.apache.pdfbox.pdmodel.PDPage
@@ -166,19 +163,7 @@ class ConfessionPdf {
             val linesCount = ceil(textLength.div(limit)).toInt()
             val amountToRemove = (textLength/linesCount).toInt()
 
-            val size = text.length
-            val into = text.length/amountToRemove
-
-            val final = mutableListOf<String>()
-
-            //sliding pane
-            for(i in 0 until into) {
-                val end = size.minus(1)
-                val offset = i * amountToRemove
-                val split = Integer.min(offset + amountToRemove, end)
-                val partition = text.subSequence(offset, split)
-                final.add(partition.toString())
-            }
+            val final = wordWrapPDF(text, amountToRemove)
 
             pageX = centerTextHorizontally(final[0])
 

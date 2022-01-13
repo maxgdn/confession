@@ -132,7 +132,6 @@ fun PreviewZone(
                         modifier = Modifier.fillMaxWidth(1/3f),
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-                        //Date
 
                         Text(
                             text = ResString.appName,
