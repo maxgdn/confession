@@ -1,11 +1,13 @@
 package com.confession.app.ui.main.zones
 
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
@@ -76,18 +78,25 @@ fun ExportZone(confessionViewModel: ConfessionViewModel) {
                 onCloseRequest = { openDialog.value = false }
             ) {
                 Column {
-                    Text(
-                        text = ResString.chooseAReceiptPrinter,
-                        style = MaterialTheme.typography.h3
-                    )
+
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.Center
+                    ) {
+                        Text(
+                            text = ResString.chooseAReceiptPrinter,
+                            style = MaterialTheme.typography.h4
+                        )
+                    }
+
 
                     val list = remember { ConfessionUsb.getUSBDevices() }
 
-                    list.forEach {
+                    list.forEachIndexed { index, confessionUsbResource ->
                         Text(
-                            text = it.name,
-                            modifier = Modifier.clickable {
-                                val confessionReceipt = ConfessionReceipt(it)
+                            text = "${index}. ${confessionUsbResource.name}",
+                            modifier = Modifier.fillMaxWidth().border(1.dp, Color.Black).padding(2.dp).clickable {
+                                val confessionReceipt = ConfessionReceipt(confessionUsbResource)
                                 if (confessionResponse != null) {
                                     confessionReceipt.create(confessionResponse)
                                 }
@@ -95,16 +104,36 @@ fun ExportZone(confessionViewModel: ConfessionViewModel) {
                         )
                     }
 
-                    Button(
-                        onClick = {
-                            openDialog.value = false
-                        },
+                    Spacer(Modifier.size(10.dp))
+
+                    Column(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         Text(
-                            text = ResString.Cancel,
-                            style = MaterialTheme.typography.h3
+                            text = ResString.printerNoticeLinux,
+                            style = MaterialTheme.typography.body1
                         )
+
+                        Text(
+                            text = ResString.printerNoticeWindows,
+                            style = MaterialTheme.typography.body1
+                        )
+
+                        Spacer(Modifier.size(10.dp))
+
+                        Button(
+                            onClick = {
+                                openDialog.value = false
+                            },
+                        ) {
+                            Text(
+                                text = ResString.Cancel,
+                                style = MaterialTheme.typography.h4
+                            )
+                        }
                     }
+
                 }
             }
         }

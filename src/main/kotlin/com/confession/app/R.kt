@@ -33,6 +33,8 @@ object ResString {
     val exportReceipt: String
 
     val chooseAReceiptPrinter: String
+    val printerNoticeLinux: String
+    val printerNoticeWindows: String
 
     val OK: String
     val Cancel: String
@@ -75,6 +77,8 @@ object ResString {
         noDesiredMood = "No Desired Mood"
 
         chooseAReceiptPrinter = "Choose a Receipt Printer"
+        printerNoticeLinux = "On Linux connection's can fail because user has no write permission on the USB device file."
+        printerNoticeWindows = "On Windows connection's can fail because no libusb device driver is installed for the device"
 
         OK = "Okay"
         Cancel = "Cancel"
