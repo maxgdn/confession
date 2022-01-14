@@ -16,9 +16,14 @@ import org.apache.pdfbox.pdmodel.graphics.image.LosslessFactory
 import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject
 import org.apache.pdfbox.util.Matrix
 import java.awt.geom.Point2D
+import java.io.File
 import java.io.IOException
+import java.nio.file.Files
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+import javax.swing.JFileChooser
+import kotlin.io.path.Path
+import kotlin.io.path.exists
 import kotlin.math.ceil
 import kotlin.math.floor
 import kotlin.properties.Delegates
@@ -387,9 +392,24 @@ class ConfessionPdf {
 
 
         currentContentStream.close()
-        document.save("/tmp/fooz.pdf")
+
+        val fileTimePattern = DateTimeFormatter.ofPattern(ResString.fileTimeFormat)
+        val fileTime = fileTimePattern.format(now)
+
+        val pathToSaveTo = getDirectory() + "/confession_${fileTime}.pdf"
+        document.save(pathToSaveTo)
 
         document.close()
+    }
+
+    private fun getDirectory(): String {
+        val defaultDirectory = JFileChooser().fileSystemView.defaultDirectory
+        val targetDirectoryString = "$defaultDirectory/confession"
+        val targetDirectory = Path(targetDirectoryString)
+        if(!targetDirectory.exists()) {
+            Files.createDirectory(targetDirectory)
+        }
+        return targetDirectoryString
     }
 
     companion object {

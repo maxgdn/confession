@@ -83,7 +83,7 @@ object ResString {
         OK = "Okay"
         Cancel = "Cancel"
 
-        timeFormat = "yyyy-MM-dd hh:mm:ss"
-        fileTimeFormat = "yyyy_MM_dd_hh_mm"
+        timeFormat = "yyyy-MM-dd hh:mm:ss a"
+        fileTimeFormat = "yyyy_MM_dd_hh_mm_a"
     }
 }
