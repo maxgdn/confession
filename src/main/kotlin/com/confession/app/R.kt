@@ -77,7 +77,7 @@ object ResString {
         noDesiredMood = "No Desired Mood"
 
         chooseAReceiptPrinter = "Choose a Receipt Printer"
-        printerNoticeLinux = "On Linux connection's can fail because user has no write permission on the USB device file."
+        printerNoticeLinux = "On Linux connection's can fail because the user has no write permission on the USB devices file."
         printerNoticeWindows = "On Windows connection's can fail because no libusb device driver is installed for the device"
 
         OK = "Okay"
