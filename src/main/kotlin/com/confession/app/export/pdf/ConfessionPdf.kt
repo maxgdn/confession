@@ -183,6 +183,7 @@ class ConfessionPdf {
 
         } else {
             pageX = centerTextHorizontally(text)
+            currentContentStream.setFont(currentFont,currentFontSize)
             currentContentStream.beginText()
             currentContentStream.newLineAtOffset(pageX ,pageY)
             currentContentStream.showText(text)
@@ -381,11 +382,12 @@ class ConfessionPdf {
 
         setFont(PDType1Font.COURIER_BOLD, currentFontSize)
         addText(ResString.tasks)
-        setFont(PDType1Font.COURIER, currentFontSize)
         if(tasks.isNotEmpty()) {
+            setFont(PDType1Font.COURIER, currentFontSize)
             addText(formatted)
 
             tasks.forEach {
+                setFont(PDType1Font.COURIER, currentFontSize)
                 addText("${it.name} - ${it.duration.inWholeMinutes} min.")
             }
         }
