@@ -1,9 +1,11 @@
 package com.confession.app.ui.main.zones
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
@@ -111,11 +113,13 @@ fun AccomplishZone(accomplishViewModel: AccomplishViewModel) {
             Text(formatted)
         }
 
+        val modifier = if(tasks.isNotEmpty()) Modifier.border(BorderStroke(1.dp, Color.Black), RoundedCornerShape(4.dp)).padding(10.dp) else Modifier
         LazyColumn(
+            modifier = modifier
         ) {
             items(tasks.size) { index ->
                 Row(
-                    modifier = Modifier.fillMaxWidth(1/2f).border(1.dp, Color.Red)
+                    modifier = Modifier.fillMaxWidth(1/2f)
                 ) {
                     val current = tasks[index]
                     //Read
