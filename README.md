@@ -60,7 +60,7 @@ Sync gradle and run the MainKt file.
 
 ![Receipt](media/receipt.jpg)
 
-###Resources
+### Resources
 
 - [ESC/POS Specification](https://reference.epson-biz.com/modules/ref_escpos/index.php?content_id=72)
 - [Permission to Feel: Unlocking the Power of Emotions to Help Our Kids, Ourselves, and Our Society Thrive](https://www.marcbrackett.com/about/book-permission-to-feel/)
