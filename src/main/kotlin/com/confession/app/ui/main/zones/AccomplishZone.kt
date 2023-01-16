@@ -58,7 +58,7 @@ fun AccomplishZone(accomplishViewModel: AccomplishViewModel) {
             var expanded = remember { mutableStateOf(false) }
             var selectedIndex = remember { mutableStateOf(0) }
 
-            val estimates = listOf(1,5,15,30,45,60,90,120)
+            val estimates = listOf(1,5,15,30,45,60,90,120,240,480)
 
             Spacer(Modifier.width(20.dp))
 
