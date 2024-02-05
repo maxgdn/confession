@@ -85,6 +85,24 @@ fun RemarkZone(
                 }
             )
         }
+
+        Spacer(Modifier.size(40.dp))
+
+        Row(
+            modifier = Modifier.fillMaxWidth(1/3f),
+            horizontalArrangement = Arrangement.Center
+        ) {
+            val complacencyState = remarkViewModel.complacency.collectAsState()
+            val complacency = complacencyState.value
+
+            QAPrompt(
+                questionText = ResString.questionComplacency,
+                answerState = complacency,
+                onAnswerChange = {
+                    remarkViewModel.setComplacency(it)
+                }
+            )
+        }
     }
 
     ResetButton(

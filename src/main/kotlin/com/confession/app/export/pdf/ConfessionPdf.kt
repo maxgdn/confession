@@ -375,6 +375,16 @@ class ConfessionPdf {
             addText(toImproveAnswer)
         }
 
+        val complancencyAnswer = confessionResponse.complancencyAnswer
+
+        if(complancencyAnswer.isNotBlank()) {
+            setFont(PDType1Font.COURIER_BOLD, currentFontSize)
+            addText(ResString.questionComplacency)
+
+            setFont(PDType1Font.COURIER, currentFontSize)
+            addText(complancencyAnswer)
+        }
+
         val tasks = confessionResponse.tasks
 
         val timeInHours = totalTaskTimeInHours(tasks)

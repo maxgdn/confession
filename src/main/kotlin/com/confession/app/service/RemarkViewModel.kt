@@ -21,6 +21,9 @@ class RemarkViewModel(remarkRepository: RemarkRepository) {
     private val _oneThingToImproveOn: MutableStateFlow<String> = MutableStateFlow("")
     val oneThingToImproveOn: StateFlow<String> = _oneThingToImproveOn
 
+    private val _complacency: MutableStateFlow<String> = MutableStateFlow("")
+    val complacency: StateFlow<String> = _complacency
+
     fun setHowCanYouFeelAnswer(text: String) {
         _howCanYouFeel.value = text
     }
@@ -33,10 +36,15 @@ class RemarkViewModel(remarkRepository: RemarkRepository) {
         _oneThingToImproveOn.value = text
     }
 
+    fun setComplacency(text: String) {
+        _complacency.value = text
+    }
+
     fun reset() {
         val emptyString = ""
         this.setHowCanYouFeelAnswer(emptyString)
         this.setDoingOneThingWell(emptyString)
         this.setOneThingToImproveOn(emptyString)
+        this.setComplacency(emptyString)
     }
 }

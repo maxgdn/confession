@@ -26,6 +26,7 @@ class ConfessionViewModel(
         val howCanYouFeel = remarkViewModel.howCanYouFeel.value
         val oneThingDoneWellAnswer = remarkViewModel.oneThingWell.value
         val oneThingToImproveOn = remarkViewModel.oneThingToImproveOn.value
+        val complacency = remarkViewModel.complacency.value
 
         val tasks = accomplishViewModel.tasksState.value
 
@@ -38,6 +39,7 @@ class ConfessionViewModel(
             howCanYouFeelAnswer = howCanYouFeel,
             doneWellAnswer = oneThingDoneWellAnswer,
             toImproveAnswer = oneThingToImproveOn,
+            complancencyAnswer = complacency,
             tasks = tasks
         )
     }

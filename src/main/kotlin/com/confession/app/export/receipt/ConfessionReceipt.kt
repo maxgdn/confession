@@ -414,6 +414,7 @@ class ConfessionReceipt(private val confessionUsbResource: ConfessionUsb.Confess
                 .questionResponse(howCanYouFeelFormattedText(confessionResponse.desiredMood), confessionResponse.howCanYouFeelAnswer)
                 .questionResponse(ResString.questionOneThingDoneWell, confessionResponse.doneWellAnswer)
                 .questionResponse(ResString.questionOneThingToImproveOn, confessionResponse.toImproveAnswer)
+                .questionResponse(ResString.questionComplacency, confessionResponse.complancencyAnswer)
                 .tasks(confessionResponse.tasks)
                 .write(BEEP_BEEP)
                 .feed(5)

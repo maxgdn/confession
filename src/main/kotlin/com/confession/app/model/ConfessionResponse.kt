@@ -11,6 +11,7 @@ class ConfessionResponse(
     val howCanYouFeelAnswer: String,
     val doneWellAnswer: String,
     val toImproveAnswer: String,
+    val complancencyAnswer: String,
     val tasks: List<Task>
 ) {
 }

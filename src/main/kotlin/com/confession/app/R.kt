@@ -23,6 +23,7 @@ object ResString {
     val questionHowCanYouFeelEmpty: String
     val questionOneThingDoneWell: String
     val questionOneThingToImproveOn: String
+    val questionComplacency: String
 
     val problemGeneratingConfession: String
     val noPresentMood: String
@@ -67,6 +68,7 @@ object ResString {
 
         questionOneThingDoneWell = "What is one thing you are doing well?"
         questionOneThingToImproveOn = "What is one thing you can improve on?"
+        questionComplacency = "Am I feeling complacent? If so what type of complacency? What's different?"
 
         exportPDF = "PDF"
         exportPrint = "Print"

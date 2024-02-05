@@ -221,6 +221,13 @@ fun PreviewZone(
 
                         Spacer(Modifier.size(20.dp))
 
+                        QuestionResponse(
+                            ResString.questionComplacency,
+                            it.complancencyAnswer
+                        )
+
+                        Spacer(Modifier.size(20.dp))
+
                         Text(
                             text = ResString.tasks,
                             fontWeight = FontWeight.Bold,
